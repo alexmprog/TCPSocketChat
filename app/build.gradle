@@ -1,0 +1,79 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        applicationId globalConfiguration.getAt("basicApplicationId")
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("basicVersionCode")
+        versionName globalConfiguration.getAt("basicVersionName")
+
+        // default port value
+        buildConfigField("int", "SERVER_PORT", "8080")
+    }
+
+    productFlavors {
+        server {
+            applicationId globalConfiguration.getAt("serverApplicationId")
+            versionCode globalConfiguration.getAt("basicVersionCode")
+            versionName globalConfiguration.getAt("basicVersionName")
+        }
+        client {
+            applicationId globalConfiguration.getAt("clientApplicationId")
+            versionCode globalConfiguration.getAt("basicVersionCode")
+            versionName globalConfiguration.getAt("basicVersionName")
+        }
+    }
+
+    sourceSets.server {
+        java.srcDirs = ['src/server/java']
+        res.srcDirs = ['src/server/res']
+        manifest.srcFile 'src/server/AndroidManifest.xml'
+    }
+
+    sourceSets.client {
+        java.srcDirs = ['src/client/java']
+        res.srcDirs = ['src/client/res']
+        manifest.srcFile 'src/client/AndroidManifest.xml'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+        debug {
+            debuggable true
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    def libraryDependencies = rootProject.ext.librariesDependencies
+
+    testCompile libraryDependencies.junit
+
+    // Support library
+    compile libraryDependencies.appCompat
+
+    // Butterknife
+    compile libraryDependencies.butterKnife
+
+    // Otto event bus
+    compile libraryDependencies.otto
+
+    // Image loading
+    compile libraryDependencies.picasso
+}

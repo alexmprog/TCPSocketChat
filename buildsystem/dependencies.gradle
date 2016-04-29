@@ -1,0 +1,22 @@
+ext {
+    // Android
+    androidBuildToolsVersion = "23.0.2"
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 22
+    androidCompileSdkVersion = 23
+
+    // Libraries
+    butterKnifeVersion = '7.0.1'
+    supportLibraryVersion = '23.3.0'
+    jUnitVersion = '4.12'
+    ottoVersion = '1.3.8'
+    picassoVersion = "2.5.2"
+
+    librariesDependencies = [
+            butterKnife         : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            junit               : "junit:junit:${jUnitVersion}",
+            appCompat           : "com.android.support:appcompat-v7:${supportLibraryVersion}",
+            otto                : "com.squareup:otto:${ottoVersion}",
+            picasso             : "com.squareup.picasso:picasso:${picassoVersion}",
+    ]
+}
